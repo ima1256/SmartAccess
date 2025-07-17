@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAccess.API", "SmartAccess.API\SmartAccess.API.csproj", "{5DD821AC-0BC9-4517-B2BB-40D8A488F603}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAccess.Application", "SmartAccess.Application\SmartAccess.Application.csproj", "{798B0398-0A2D-48A7-9D3E-7F968EBB9938}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAccess.Domain", "SmartAccess.Domain\SmartAccess.Domain.csproj", "{97391100-FAC0-4AC1-A932-47863A1279FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAccess.Infrastructure", "SmartAccess.Infrastructure\SmartAccess.Infrastructure.csproj", "{003F880C-3ECD-4836-A574-1852C2188FBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAccess.Shared", "SmartAccess.Shared\SmartAccess.Shared.csproj", "{FFF4B335-902A-44ED-813A-BD653A6916F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAccess.Tests", "SmartAccess.Tests\SmartAccess.Tests.csproj", "{587D76BF-A15F-4700-8127-4664A05E0168}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5DD821AC-0BC9-4517-B2BB-40D8A488F603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD821AC-0BC9-4517-B2BB-40D8A488F603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD821AC-0BC9-4517-B2BB-40D8A488F603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD821AC-0BC9-4517-B2BB-40D8A488F603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{798B0398-0A2D-48A7-9D3E-7F968EBB9938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{798B0398-0A2D-48A7-9D3E-7F968EBB9938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{798B0398-0A2D-48A7-9D3E-7F968EBB9938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{798B0398-0A2D-48A7-9D3E-7F968EBB9938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97391100-FAC0-4AC1-A932-47863A1279FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97391100-FAC0-4AC1-A932-47863A1279FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97391100-FAC0-4AC1-A932-47863A1279FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97391100-FAC0-4AC1-A932-47863A1279FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{003F880C-3ECD-4836-A574-1852C2188FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{003F880C-3ECD-4836-A574-1852C2188FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{003F880C-3ECD-4836-A574-1852C2188FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{003F880C-3ECD-4836-A574-1852C2188FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF4B335-902A-44ED-813A-BD653A6916F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF4B335-902A-44ED-813A-BD653A6916F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF4B335-902A-44ED-813A-BD653A6916F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF4B335-902A-44ED-813A-BD653A6916F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{587D76BF-A15F-4700-8127-4664A05E0168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{587D76BF-A15F-4700-8127-4664A05E0168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{587D76BF-A15F-4700-8127-4664A05E0168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{587D76BF-A15F-4700-8127-4664A05E0168}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
