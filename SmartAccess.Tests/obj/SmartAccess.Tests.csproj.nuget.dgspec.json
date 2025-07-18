@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\SmartAccess.Tests.csproj": {}
+    "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\SmartAccess.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj",
         "projectName": "SmartAccess.Application",
-        "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj",
-        "packagesPath": "C:\\Users\\imano\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\imano\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -26,11 +26,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj": {
-                "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj"
+              "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj"
               },
-              "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj": {
-                "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj"
+              "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj"
               }
             }
           }
@@ -69,17 +69,17 @@
         }
       }
     },
-    "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj",
         "projectName": "SmartAccess.Domain",
-        "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj",
-        "packagesPath": "C:\\Users\\imano\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\imano\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -127,17 +127,17 @@
         }
       }
     },
-    "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj",
         "projectName": "SmartAccess.Shared",
-        "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj",
-        "packagesPath": "C:\\Users\\imano\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\imano\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -185,17 +185,17 @@
         }
       }
     },
-    "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\SmartAccess.Tests.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\SmartAccess.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\SmartAccess.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\SmartAccess.Tests.csproj",
         "projectName": "SmartAccess.Tests",
-        "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\SmartAccess.Tests.csproj",
-        "packagesPath": "C:\\Users\\imano\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\SmartAccess.Tests.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\imano\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -207,11 +207,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj": {
-                "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj"
+              "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Application\\SmartAccess.Application.csproj"
               },
-              "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj": {
-                "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj"
+              "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\Desktop\\WebProject\\SaltoSystems\\SmartAccess\\SmartAccess.Domain\\SmartAccess.Domain.csproj"
               }
             }
           }

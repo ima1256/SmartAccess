@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartAccess.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9dcb26796d1f33c4dba00710bd5d8f4c85c0f356")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+99230866e0ba92d2aaa2472732fd4d3dc7ca82c6")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartAccess.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartAccess.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,177 @@
+// // SmartAccess.Domain/Entities/User.cs
+// public class User
+// {
+//     public Guid Id { get; set; }
+//     public string Username { get; set; }
+//     public string RFIDCard { get; set; }
+//     public bool IsActive { get; set; }
+// }
+
+
+// public interface IUserRepository
+// {
+//     Task<User?> GetByIdAsync(Guid id);
+//     Task AddAsync(User user);
+// }
+
+
+
+// public class RegisterUserUseCase
+// {
+//     private readonly IUserRepository _repo;
+//     public RegisterUserUseCase(IUserRepository repo) => _repo = repo;
+
+//     public async Task Execute(UserDto dto)
+//     {
+//         var user = new User { Id = Guid.NewGuid(), Username = dto.Username, RFIDCard = dto.RFIDCard };
+//         await _repo.AddAsync(user);
+//     }
+// }
+
+// //sqlcmd -S ima1256server.database.windows.net -d AccessControlDB -U CloudSA1868eb93 -P rh*617/latH
+
+// dotnet add SmartAccess.Infrastructure package Microsoft.EntityFrameworkCore.SqlServer
+// dotnet add SmartAccess.Infrastructure package Microsoft.EntityFrameworkCore.Tools
+
+// using SmartAccess.Domain.Entities;
+
+// namespace SmartAccess.Domain.Repositories
+// {
+//     public interface IUserRepository
+//     {
+//         Task<User?> GetByIdAsync(Guid id);
+//         Task AddAsync(User user);
+//     }
+// }
+
+// namespace SmartAccess.Application.DTOs
+// {
+//     public class UserDto
+//     {
+//         public string Username { get; set; } = string.Empty;
+//         public string RFIDCard { get; set; } = string.Empty;
+//     }
+// }
+
+
+// using Microsoft.EntityFrameworkCore;
+// using SmartAccess.Domain.Entities;
+// using SmartAccess.Domain.Repositories;
+// using SmartAccess.Infrastructure.Persistence;
+
+// namespace SmartAccess.Infrastructure.Repositories
+// {
+//     public class UserRepository : IUserRepository
+//     {
+//         private readonly SmartAccessDbContext _context;
+
+//         public UserRepository(SmartAccessDbContext context)
+//         {
+//             _context = context;
+//         }
+
+//         public async Task<User?> GetByIdAsync(Guid id)
+//         {
+//             return await _context.Users.FindAsync(id);
+//         }
+
+//         public async Task AddAsync(User user)
+//         {
+//             _context.Users.Add(user);
+//             await _context.SaveChangesAsync();
+//         }
+//     }
+// }
+
+// // using Microsoft.EntityFrameworkCore;
+// // using SmartAccess.Application.UseCases;
+// // using SmartAccess.Domain.Repositories;
+// // using SmartAccess.Infrastructure.Persistence;
+// // using SmartAccess.Infrastructure.Repositories;
+
+// // var builder = WebApplication.CreateBuilder(args);
+
+// // // Database
+// // builder.Services.AddDbContext<SmartAccessDbContext>(options =>
+// //     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// // // DI
+// // builder.Services.AddScoped<IUserRepository, UserRepository>();
+// // builder.Services.AddScoped<RegisterUserUseCase>();
+
+// // // Controller & swagger
+// // builder.Services.AddControllers();
+// // builder.Services.AddEndpointsApiExplorer();
+// // builder.Services.AddSwaggerGen();
+
+// // var app = builder.Build();
+// // app.UseSwagger();
+// // app.UseSwaggerUI();
+// // app.MapControllers();
+// // app.Run();
+
+
+
+
+// dotnet add reference ../SmartAccess.Infrastructure/SmartAccess.Infrastructure.csproj
+
+
+
+
+
+
+
+
+// using Microsoft.EntityFrameworkCore;
+// using SmartAccess.Domain.Entities;
+
+// namespace SmartAccess.Infrastructure.Persistence
+// {
+//     public class SmartAccessDbContext : DbContext
+//     {
+//         public SmartAccessDbContext(DbContextOptions<SmartAccessDbContext> options)
+//             : base(options)
+//         {
+//         }
+
+//         public DbSet<User> Users => Set<User>();
+//     }
+// }
+
+
+// using Microsoft.AspNetCore.Mvc;
+// using SmartAccess.Application.DTOs;
+// using SmartAccess.Application.UseCases;
+
+// namespace SmartAccess.API.Controllers
+// {
+//     [ApiController]
+//     [Route("api/[controller]")]
+//     public class UsersController : ControllerBase
+//     {
+//         private readonly RegisterUserUseCase _registerUser;
+
+//         public UsersController(RegisterUserUseCase registerUser)
+//         {
+//             _registerUser = registerUser;
+//         }
+
+//         [HttpPost("register")]
+//         public async Task<IActionResult> Register(UserDto dto)
+//         {
+//             await _registerUser.Execute(dto);
+//             return Ok("User registered successfully.");
+//         }
+//     }
+// }
+
+
+dotnet ef migrations add InitialCreate --project SmartAccess.Infrastructure --startup-project SmartAccess.API
+
+dotnet tool install --global dotnet-ef
+
+dotnet ef migrations add InitialCreate --project SmartAccess.Infrastructure --startup-project SmartAccess.API
+
+dotnet ef database update --project SmartAccess.Infrastructure --startup-project SmartAccess.API
+
+

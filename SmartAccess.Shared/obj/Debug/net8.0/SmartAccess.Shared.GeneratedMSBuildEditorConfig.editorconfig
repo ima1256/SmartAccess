@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SmartAccess.Shared
-build_property.ProjectDir = C:\Users\imano\OneDrive\Escritorio\SaltoSystems\SmartAccess\SmartAccess.Shared\
+build_property.ProjectDir = C:\Users\Usuario\Desktop\WebProject\SaltoSystems\SmartAccess\SmartAccess.Shared\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
