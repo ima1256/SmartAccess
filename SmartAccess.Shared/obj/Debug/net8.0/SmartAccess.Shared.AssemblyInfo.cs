@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartAccess.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9dcb26796d1f33c4dba00710bd5d8f4c85c0f356")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartAccess.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartAccess.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
