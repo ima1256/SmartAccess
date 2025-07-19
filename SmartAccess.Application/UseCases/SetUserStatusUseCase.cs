@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using SmartAccess.Application.DTOs;
 using SmartAccess.Domain.Repositories;
+using SmartAccess.Application.Contracts;
 
 namespace SmartAccess.Application.UseCases
 {
-    public class SetUserStatusUseCase
+    public class SetUserStatusUseCase : ISetUserStatusUseCase
     {
         private readonly IUserRepository _repo;
         public SetUserStatusUseCase(IUserRepository repo) => _repo = repo;

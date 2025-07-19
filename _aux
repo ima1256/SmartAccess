@@ -166,61 +166,179 @@
 // }
 
 
-dotnet ef migrations add InitialCreate --project SmartAccess.Infrastructure --startup-project SmartAccess.API
+// dotnet ef migrations add InitialCreate --project SmartAccess.Infrastructure --startup-project SmartAccess.API
 
-dotnet tool install --global dotnet-ef
+// dotnet tool install --global dotnet-ef
 
-dotnet ef migrations add InitialCreate --project SmartAccess.Infrastructure --startup-project SmartAccess.API
+// dotnet ef migrations add InitialCreate --project SmartAccess.Infrastructure --startup-project SmartAccess.API
 
-dotnet ef database update --project SmartAccess.Infrastructure --startup-project SmartAccess.API
+// dotnet ef database update --project SmartAccess.Infrastructure --startup-project SmartAccess.API
 
 
-public interface IUserRepository
+// public interface IUserRepository
+// {
+//     Task<User?> GetByIdAsync(Guid id);
+//     Task AddAsync(User user);
+//     Task UpdateAsync(User user);
+//     Task DeleteAsync(Guid id);
+//     Task<IEnumerable<User>> GetAllAsync();
+// }
+
+
+// public class GetUserByIdUseCase
+// {
+//     private readonly IUserRepository _repo;
+
+//     public GetUserByIdUseCase(IUserRepository repo) => _repo = repo;
+
+//     public async Task<User?> Execute(Guid id) => await _repo.GetByIdAsync(id);
+// }
+
+// // SmartAccess.Domain/Entities/Door.cs
+// public class Door
+// {
+//     public Guid Id { get; set; }
+//     public string Name { get; set; } = string.Empty;
+//     public bool IsLocked { get; set; } = true;
+// }
+
+// public class AccessLog
+// {
+//     public Guid Id { get; set; }
+//     public Guid UserId { get; set; }
+//     public Guid DoorId { get; set; }
+//     public DateTime Timestamp { get; set; }
+//     public bool AccessGranted { get; set; }
+// }
+
+// [HttpGet]
+// public async Task<IActionResult> GetAll()
+// {
+//     var users = await _getAllUsers.Execute();
+//     return Ok(users);
+// }
+
+// public async Task<IEnumerable<User>> Search(string text)
+// {
+//     return await _context.Users
+//         .Where(u => u.Username.Contains(text))
+//         .ToListAsync();
+// }
+
+
+// public class SearchUsersUseCase
+// {
+//     private readonly IUserRepository _repo;
+
+//     public SearchUsersUseCase(IUserRepository repo)
+//     {
+//         _repo = repo;
+//     }
+
+//     public async Task<IEnumerable<UserDto>> Execute(string? username = null, bool? isEnabled = null)
+//     {
+//         var users = await _repo.SearchAsync(username, isEnabled);
+
+//         return users.Select(u => new UserDto
+//         {
+//             Id = u.Id,
+//             Username = u.Username,
+//             RFIDCard = u.RFIDCard,
+//             IsEnabled = u.IsEnabled
+//         });
+//     }
+// }
+
+
+// var query = _context.Users.AsQueryable();
+
+// if (!string.IsNullOrWhiteSpace(username))
+//     query = query.Where(u => u.Username.Contains(username));
+
+// if (isEnabled.HasValue)
+//     query = query.Where(u => u.IsEnabled == isEnabled.Value);
+
+// return await query.ToListAsync();
+
+public class UsersControllerTests
 {
-    Task<User?> GetByIdAsync(Guid id);
-    Task AddAsync(User user);
-    Task UpdateAsync(User user);
-    Task DeleteAsync(Guid id);
-    Task<IEnumerable<User>> GetAllAsync();
+    private readonly UsersController _controller;
+    private readonly Mock<RegisterUserUseCase> _registerUser = new();
+    private readonly Mock<GetUserByIdUseCase> _getUserById = new();
+    private readonly Mock<GetAllUsersUseCase> _getAllUsers = new();
+    private readonly Mock<UpdateUserUseCase> _updateUser = new();
+    private readonly Mock<DeleteUserUseCase> _deleteUser = new();
+    private readonly Mock<SearchUsersUseCase> _searchUsers = new();
+    private readonly Mock<SetUserStatusUseCase> _setUserStatus = new();
+
+    public UsersControllerTests()
+    {
+        _controller = new UsersController(
+            _setUserStatus.Object,
+            _searchUsers.Object,
+            _deleteUser.Object,
+            _updateUser.Object,
+            _registerUser.Object,
+            _getUserById.Object,
+            _getAllUsers.Object
+        );
+    }
+
+    [Fact]
+    public async Task Register_ReturnsOkResult()
+    {
+        // Arrange
+        var dto = new UserDto { FirstName = "Juan", LastName = "Pérez", Email = "juan@test.com" };
+
+        // Act
+        var result = await _controller.Register(dto);
+
+        // Assert
+        result.Should().BeOfType<OkObjectResult>();
+        _registerUser.Verify(u => u.Execute(dto), Times.Once);
+    }
+
+    [Fact]
+    public async Task Register_NullDto_ReturnsBadRequest()
+    {
+        // Act
+        var result = await _controller.Register(null);
+
+        // Assert
+        result.Should().BeOfType<BadRequestResult>();
+        _registerUser.Verify(u => u.Execute(It.IsAny<UserDto>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Register_EmptyUsername_ReturnsBadRequest()
+    {
+        // Arrange
+        var dto = new UserDto { Username = "", RFIDCard = "RFID123", IsActive = true };
+
+        // Act
+        var result = await _controller.Register(dto);
+
+        // Assert
+        result.Should().BeOfType<BadRequestObjectResult>();
+    }
+
+    [Fact]
+    public async Task Register_ThrowsException_Returns500()
+    {
+        // Arrange
+        var dto = new UserDto { Username = "ErrorUser", RFIDCard = "XXXX", IsActive = false };
+        _registerUser.Setup(u => u.Execute(dto)).ThrowsAsync(new Exception("Database error"));
+
+        // Act
+        var result = await _controller.Register(dto);
+
+        // Assert
+        result.Should().BeOfType<ObjectResult>()
+            .Which.StatusCode.Should().Be(500);
+    }
+
+
+
 }
 
 
-public class GetUserByIdUseCase
-{
-    private readonly IUserRepository _repo;
-
-    public GetUserByIdUseCase(IUserRepository repo) => _repo = repo;
-
-    public async Task<User?> Execute(Guid id) => await _repo.GetByIdAsync(id);
-}
-
-// SmartAccess.Domain/Entities/Door.cs
-public class Door
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public bool IsLocked { get; set; } = true;
-}
-
-public class AccessLog
-{
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public Guid DoorId { get; set; }
-    public DateTime Timestamp { get; set; }
-    public bool AccessGranted { get; set; }
-}
-
-[HttpGet]
-public async Task<IActionResult> GetAll()
-{
-    var users = await _getAllUsers.Execute();
-    return Ok(users);
-}
-
-public async Task<IEnumerable<User>> Search(string text)
-{
-    return await _context.Users
-        .Where(u => u.Username.Contains(text))
-        .ToListAsync();
-}

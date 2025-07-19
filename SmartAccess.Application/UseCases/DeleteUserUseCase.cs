@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartAccess.Application.Contracts;
 using SmartAccess.Domain.Entities;
 using SmartAccess.Domain.Repositories;
 
 namespace SmartAccess.Application.UseCases
 {
-    public class DeleteUserUseCase
+    public class DeleteUserUseCase : IDeleteUserUseCase
     {
         private readonly IUserRepository _repo;
 

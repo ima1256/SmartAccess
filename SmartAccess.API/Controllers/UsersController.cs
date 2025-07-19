@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartAccess.Application.DTOs;
-using SmartAccess.Application.UseCases;
+using SmartAccess.Application.Contracts;
 using SmartAccess.Domain.Entities;
 
 namespace SmartAccess.API.Controllers
@@ -12,15 +12,22 @@ namespace SmartAccess.API.Controllers
     [Route("/api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly RegisterUserUseCase _registerUser;
-        private readonly GetUserByIdUseCase _getUserById;
-        private readonly GetAllUsersUseCase _getAllUsers;
-        private readonly UpdateUserUseCase _updateUser;
-        private readonly DeleteUserUseCase _deleteUser;
-        private readonly SearchUsersUseCase _searchUsers;
-        private readonly SetUserStatusUseCase _setUserStatus;
+        private readonly IRegisterUserUseCase _registerUser;
+        private readonly IGetUserByIdUseCase _getUserById;
+        private readonly IGetAllUsersUseCase _getAllUsers;
+        private readonly IUpdateUserUseCase _updateUser;
+        private readonly IDeleteUserUseCase _deleteUser;
+        private readonly ISearchUsersUseCase _searchUsers;
+        private readonly ISetUserStatusUseCase _setUserStatus;
 
-        public UsersController(SetUserStatusUseCase setUserStatus, SearchUsersUseCase searchUsers, DeleteUserUseCase deleteUser, UpdateUserUseCase updateUser, RegisterUserUseCase registerUser, GetUserByIdUseCase getUserById, GetAllUsersUseCase getAllUsers)
+        public UsersController(
+            ISetUserStatusUseCase setUserStatus,
+            ISearchUsersUseCase searchUsers,
+            IDeleteUserUseCase deleteUser,
+            IUpdateUserUseCase updateUser,
+            IRegisterUserUseCase registerUser,
+            IGetUserByIdUseCase getUserById,
+            IGetAllUsersUseCase getAllUsers)
         {
             _registerUser = registerUser;
             _getUserById = getUserById;
@@ -31,11 +38,24 @@ namespace SmartAccess.API.Controllers
             _setUserStatus = setUserStatus;
         }
 
+
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserDto dto)
+        public async Task<IActionResult> Register(UserDto? dto)
         {
-            await _registerUser.Execute(dto);
-            return Ok("User registered succesfully.");
+            if (dto == null) return BadRequest();
+
+            if (string.IsNullOrWhiteSpace(dto.Username)) return BadRequest("Username is required");
+
+            try
+            {
+                await _registerUser.Execute(dto);
+                return Ok("User registered succesfully.");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An error ocurred: " + e.Message);
+            }
+
         }
 
         [HttpGet("{id}")]
@@ -69,13 +89,7 @@ namespace SmartAccess.API.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> Search([FromQuery] string text, [FromQuery] bool? status)
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            if (text is null && status is null)
-            {
-                Console.WriteLine("These are null");
-            }
-            Console.WriteLine(text);
-            Console.ResetColor();
+
             var users = await _searchUsers.Execute(text, status);
             return Ok(users);
         }

@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartAccess.Application.Contracts;
 using SmartAccess.Application.DTOs;
 using SmartAccess.Domain.Entities;
 using SmartAccess.Domain.Repositories;
 
 namespace SmartAccess.Application.UseCases
 {
-    public class SearchUsersUseCase
+    public class SearchUsersUseCase : ISearchUsersUseCase
     {
         private readonly IUserRepository _repo;
 

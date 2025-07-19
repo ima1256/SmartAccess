@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartAccess.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4693465928b71b0e52a990de46aa7a3dc4c18b72")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+481fcdc30921cf53f154fe70ab28421f2901b44d")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartAccess.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartAccess.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
