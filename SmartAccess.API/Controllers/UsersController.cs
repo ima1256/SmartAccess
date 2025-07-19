@@ -2,16 +2,16 @@ using Microsoft.AspNetCore.Mvc;
 using SmartAccess.Application.DTOs;
 using SmartAccess.Application.Contracts;
 using SmartAccess.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace SmartAccess.API.Controllers
 {
-
-
 
     [ApiController]
     [Route("/api/[controller]")]
     public class UsersController : ControllerBase
     {
+        private readonly ILogger<UsersController> _logger;
         private readonly IRegisterUserUseCase _registerUser;
         private readonly IGetUserByIdUseCase _getUserById;
         private readonly IGetAllUsersUseCase _getAllUsers;
@@ -21,6 +21,7 @@ namespace SmartAccess.API.Controllers
         private readonly ISetUserStatusUseCase _setUserStatus;
 
         public UsersController(
+            ILogger<UsersController> logger,
             ISetUserStatusUseCase setUserStatus,
             ISearchUsersUseCase searchUsers,
             IDeleteUserUseCase deleteUser,
@@ -29,6 +30,7 @@ namespace SmartAccess.API.Controllers
             IGetUserByIdUseCase getUserById,
             IGetAllUsersUseCase getAllUsers)
         {
+            _logger = logger;
             _registerUser = registerUser;
             _getUserById = getUserById;
             _getAllUsers = getAllUsers;
@@ -40,11 +42,12 @@ namespace SmartAccess.API.Controllers
 
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserDto? dto)
+        public async Task<IActionResult> Register([FromBody] UserDto? dto)
         {
-            if (dto == null) return BadRequest();
-
-            if (string.IsNullOrWhiteSpace(dto.Username)) return BadRequest("Username is required");
+            if (dto == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {
@@ -53,6 +56,7 @@ namespace SmartAccess.API.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "Error registering user with Username: {Username}", dto.Username);
                 return StatusCode(500, "An error ocurred: " + e.Message);
             }
 

@@ -337,6 +337,21 @@ public class UsersControllerTests
             .Which.StatusCode.Should().Be(500);
     }
 
+    //dotnet add package FluentValidation.AspNetCore
+
+    //     using FluentValidation;
+    // using SmartAccess.Application.DTOs;
+
+    // public class UserDtoValidator : AbstractValidator<UserDto>
+    // {
+    //     public UserDtoValidator()
+    //     {
+    //         RuleFor(x => x.Username).NotEmpty().WithMessage("Username is required");
+    //         RuleFor(x => x.RFIDCard).NotEmpty().WithMessage("RFID Card is required");
+    //         // Puedes agregar más reglas aquí
+    //     }
+    // }
+
 
 
 }

@@ -4,6 +4,7 @@ using SmartAccess.Application.DTOs;
 using SmartAccess.Application.Contracts;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 public class UsersControllerTests
 {
@@ -15,6 +16,7 @@ public class UsersControllerTests
     private readonly Mock<IUpdateUserUseCase> _updateUser = new();
     private readonly Mock<IDeleteUserUseCase> _deleteUser = new();
     private readonly Mock<ISearchUsersUseCase> _searchUsers = new();
+    private readonly Mock<ILogger<UsersController>> _logger = new();
 
 
     private readonly Mock<ISetUserStatusUseCase> _setUserStatus = new();
@@ -22,6 +24,7 @@ public class UsersControllerTests
     public UsersControllerTests()
     {
         _controller = new UsersController(
+            _logger.Object,
             _setUserStatus.Object,
             _searchUsers.Object,
             _deleteUser.Object,

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qbMeEaPnQLE=",
+  "dgSpecHash": "Qfc64lE+8eA=",
   "success": true,
   "projectFilePath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Tests\\SmartAccess.Tests.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,9 @@
     "C:\\Users\\imano\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\imano\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\imano\\.nuget\\packages\\fluentassertions\\8.5.0\\fluentassertions.8.5.0.nupkg.sha512",
+    "C:\\Users\\imano\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
+    "C:\\Users\\imano\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.1\\fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
+    "C:\\Users\\imano\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
     "C:\\Users\\imano\\.nuget\\packages\\microsoft.aspnetcore.mvc.testing\\8.0.7\\microsoft.aspnetcore.mvc.testing.8.0.7.nupkg.sha512",
     "C:\\Users\\imano\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.18\\microsoft.aspnetcore.openapi.8.0.18.nupkg.sha512",
     "C:\\Users\\imano\\.nuget\\packages\\microsoft.aspnetcore.testhost\\8.0.7\\microsoft.aspnetcore.testhost.8.0.7.nupkg.sha512",

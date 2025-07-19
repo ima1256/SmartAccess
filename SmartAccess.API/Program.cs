@@ -1,8 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using SmartAccess.Application.Contracts;
 using SmartAccess.Application.UseCases;
 using SmartAccess.Domain.Repositories;
 using SmartAccess.Infrastructure.Persistence;
 using SmartAccess.Infrastructure.Repositories;
+using FluentValidation;
+using SmartAccess.API.Validators;
+using SmartAccess.Application.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,16 +16,18 @@ builder.Services.AddDbContext<SmartAccessDbContext>(options =>
 
 // DI
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<RegisterUserUseCase>();
-builder.Services.AddScoped<GetUserByIdUseCase>();
-builder.Services.AddScoped<GetAllUsersUseCase>();
-builder.Services.AddScoped<UpdateUserUseCase>();
-builder.Services.AddScoped<DeleteUserUseCase>();
-builder.Services.AddScoped<SearchUsersUseCase>();
-builder.Services.AddScoped<SetUserStatusUseCase>();
+builder.Services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+builder.Services.AddScoped<IGetUserByIdUseCase, GetUserByIdUseCase>();
+builder.Services.AddScoped<IGetAllUsersUseCase, GetAllUsersUseCase>();
+builder.Services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
+builder.Services.AddScoped<IDeleteUserUseCase, DeleteUserUseCase>();
+builder.Services.AddScoped<ISearchUsersUseCase, SearchUsersUseCase>();
+builder.Services.AddScoped<ISetUserStatusUseCase, SetUserStatusUseCase>();
+
 
 // Controller & swagger
 builder.Services.AddControllers();
+builder.Services.AddScoped<IValidator<UserDto>, UserDtoValidator>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
