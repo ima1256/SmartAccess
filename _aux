@@ -210,3 +210,17 @@ public class AccessLog
     public DateTime Timestamp { get; set; }
     public bool AccessGranted { get; set; }
 }
+
+[HttpGet]
+public async Task<IActionResult> GetAll()
+{
+    var users = await _getAllUsers.Execute();
+    return Ok(users);
+}
+
+public async Task<IEnumerable<User>> Search(string text)
+{
+    return await _context.Users
+        .Where(u => u.Username.Contains(text))
+        .ToListAsync();
+}

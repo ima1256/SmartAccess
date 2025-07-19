@@ -14,6 +14,11 @@ builder.Services.AddDbContext<SmartAccessDbContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<RegisterUserUseCase>();
 builder.Services.AddScoped<GetUserByIdUseCase>();
+builder.Services.AddScoped<GetAllUsersUseCase>();
+builder.Services.AddScoped<UpdateUserUseCase>();
+builder.Services.AddScoped<DeleteUserUseCase>();
+builder.Services.AddScoped<SearchUsersUseCase>();
+builder.Services.AddScoped<SetUserStatusUseCase>();
 
 // Controller & swagger
 builder.Services.AddControllers();

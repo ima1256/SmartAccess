@@ -12,7 +12,7 @@ using SmartAccess.Infrastructure.Persistence;
 namespace SmartAccess.Infrastructure.Migrations
 {
     [DbContext(typeof(SmartAccessDbContext))]
-    [Migration("20250718162200_InitialCreate")]
+    [Migration("20250719082312_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,6 +35,10 @@ namespace SmartAccess.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("RFIDCard")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
