@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj",
+      "projectUniqueName": "C:\\Users\\imano\\OneDrive\\Escritorio\\Cosas Nuevas\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj",
       "projectName": "SmartAccess.Shared",
-      "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj",
+      "projectPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\Cosas Nuevas\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\SmartAccess.Shared.csproj",
       "packagesPath": "C:\\Users\\imano\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\obj\\",
+      "outputPath": "C:\\Users\\imano\\OneDrive\\Escritorio\\Cosas Nuevas\\SaltoSystems\\SmartAccess\\SmartAccess.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\imano\\AppData\\Roaming\\NuGet\\NuGet.Config"

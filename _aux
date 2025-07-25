@@ -352,8 +352,191 @@ public class UsersControllerTests
     //     }
     // }
 
+    //dotnet publish -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true
+
+
+    // docker build -t smartaccess-api .
+    // docker run -d -p 5000:80 smartaccess-api
+
+    //docker run -d -p 5000:80 smartaccess-api
+
+
 
 
 }
 
 
+// [HttpGet("{id}")]
+// public async Task<IActionResult> Get(Guid id)
+// {
+//     try
+//     {
+//         var user = await _getUserById.Execute(id);
+
+//         if (user == null)
+//         {
+//             _logger.LogWarning("User not found. ID: {UserId}", id);
+//             return NotFound($"User with ID {id} was not found.");
+//         }
+
+// if (id == Guid.Empty)
+// {
+//     return BadRequest("The provided user ID is invalid.");
+// }
+
+//         return Ok(user);
+//     }
+//     catch (Exception ex)
+//     {
+//         _logger.LogError(ex, "Error retrieving user with ID: {UserId}", id);
+//         return StatusCode(500, "An internal server error occurred.");
+//     }
+// }
+
+
+// [Fact]
+// public async Task Get_UserExists_ReturnsOk()
+// { ... }
+
+// [Fact]
+// public async Task Get_UserDoesNotExist_ReturnsNotFound()
+// { ... }
+
+// [Fact]
+// public async Task Get_UserExists_ReturnsOk()
+// {
+//     // Arrange
+//     var userId = Guid.NewGuid();
+//     var expectedUser = new UserDto
+//     {
+//         Username = "testuser",
+//         RFIDCard = "RFID123",
+//         IsActive = true
+//     };
+
+//     _getUserById
+//         .Setup(s => s.Execute(userId))
+//         .ReturnsAsync(expectedUser);
+
+//     // Act
+//     var result = await _controller.Get(userId);
+
+//     // Assert
+//     result.Should().BeOfType<OkObjectResult>();
+
+//     var okResult = result as OkObjectResult;
+//     okResult!.Value.Should().BeEquivalentTo(expectedUser);
+
+//     _getUserById.Verify(s => s.Execute(userId), Times.Once);
+// }
+
+//dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+
+// User -> UserDto
+// CreateMap<User, UserDto>()
+//     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
+
+// // UserDto -> User
+// CreateMap<UserDto, User>()
+//     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)))
+//     .ForMember(dest => dest.Role, opt => opt.Ignore()); // si no viene del DTO
+
+
+
+
+// ✅ 4.Usa AutoMapper en tu controlador/servicio
+// Inyecta IMapper:
+
+// csharp
+// Copiar
+// Editar
+// private readonly IMapper _mapper;
+
+// public UserController(IMapper mapper /* otros deps */)
+// {
+//     _mapper = mapper;
+// }
+// Y úsalo así:
+
+// csharp
+// Copiar
+// Editar
+// var user = await _repo.GetByIdAsync(id);
+
+// // Entity -> DTO
+// var dto = _mapper.Map<UserDto>(user);
+
+// // DTO -> Entity
+// var entity = _mapper.Map<User>(dto);
+// ✅ 5.BONUS: Métodos ToDto() y ToEntity() usando extensión(opcional)
+// Si prefieres una API fluida y más legible, puedes agregar extensiones por encima de AutoMapper:
+
+// csharp
+// Copiar
+// Editar
+// public static class UserMappingExtensions
+// {
+//     public static UserDto ToDto(this User user, IMapper mapper)
+//         => mapper.Map<UserDto>(user);
+
+//     public static User ToEntity(this UserDto dto, IMapper mapper)
+//         => mapper.Map<User>(dto);
+// }
+// Uso:
+
+// csharp
+// Copiar
+// Editar
+// var dto = user.ToDto(_mapper);
+// var entity = dto.ToEntity(_mapper);
+// ✅ ¿Y los tests?
+// Puedes probar el perfil así:
+
+// csharp
+// Copiar
+// Editar
+// [Fact]
+// public void UserProfile_Configuration_IsValid()
+// {
+//     var config = new MapperConfiguration(cfg => cfg.AddProfile<UserProfile>());
+//     config.AssertConfigurationIsValid(); // lanza excepción si hay errores
+// }
+
+// [Fact]
+// public async Task Get_EmptyGuid_ReturnsBadRequest()
+// {
+//     // Arrange
+//     var invalidId = Guid.Empty;
+
+//     // Act
+//     var result = await _controller.Get(invalidId);
+
+//     // Assert
+//     result.Should().BeOfType<BadRequestObjectResult>();
+
+//     var badRequest = result as BadRequestObjectResult;
+//     badRequest!.Value.Should().Be("The provided user ID is invalid.");
+
+//     _getUserById.Verify(s => s.Execute(It.IsAny<Guid>()), Times.Never);
+// }
+
+
+// [Fact]
+// public async Task Get_ExceptionThrown_ReturnsInternalServerError()
+// {
+//     // Arrange
+//     var userId = Guid.NewGuid();
+//     _getUserById.Setup(s => s.Execute(userId)).ThrowsAsync(new Exception("Something went wrong"));
+
+//     // Act
+//     var result = await _controller.Get(userId);
+
+//     // Assert
+//     result.Should().BeOfType<ObjectResult>();
+
+//     var objectResult = result as ObjectResult;
+//     objectResult!.StatusCode.Should().Be(500);
+//     objectResult.Value.Should().Be("An internal server error ocurred.");
+
+//     _getUserById.Verify(s => s.Execute(userId), Times.Once);
+// }

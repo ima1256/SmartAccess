@@ -3,6 +3,8 @@ using SmartAccess.Application.DTOs;
 using SmartAccess.Application.Contracts;
 using SmartAccess.Domain.Entities;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
+using SmartAccess.Application.Mapping;
 
 namespace SmartAccess.API.Controllers
 {
@@ -11,7 +13,9 @@ namespace SmartAccess.API.Controllers
     [Route("/api/[controller]")]
     public class UsersController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly ILogger<UsersController> _logger;
+
         private readonly IRegisterUserUseCase _registerUser;
         private readonly IGetUserByIdUseCase _getUserById;
         private readonly IGetAllUsersUseCase _getAllUsers;
@@ -21,6 +25,7 @@ namespace SmartAccess.API.Controllers
         private readonly ISetUserStatusUseCase _setUserStatus;
 
         public UsersController(
+            IMapper mapper,
             ILogger<UsersController> logger,
             ISetUserStatusUseCase setUserStatus,
             ISearchUsersUseCase searchUsers,
@@ -30,6 +35,7 @@ namespace SmartAccess.API.Controllers
             IGetUserByIdUseCase getUserById,
             IGetAllUsersUseCase getAllUsers)
         {
+            _mapper = mapper;
             _logger = logger;
             _registerUser = registerUser;
             _getUserById = getUserById;
@@ -44,6 +50,12 @@ namespace SmartAccess.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserDto? dto)
         {
+
+            if (dto == null)
+            {
+                return BadRequest("Request body is null.");
+            }
+
             if (dto == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -52,12 +64,12 @@ namespace SmartAccess.API.Controllers
             try
             {
                 await _registerUser.Execute(dto);
-                return Ok("User registered succesfully.");
+                return Ok("User registered successfully.");
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Error registering user with Username: {Username}", dto.Username);
-                return StatusCode(500, "An error ocurred: " + e.Message);
+                return StatusCode(500, "An internal server error ocurred.");
             }
 
         }
@@ -65,8 +77,29 @@ namespace SmartAccess.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var user = await _getUserById.Execute(id);
-            return user is not null ? Ok(user) : NotFound();
+
+            if (id == Guid.Empty)
+            {
+                return BadRequest("The provided user ID is invalid.");
+            }
+
+            try
+            {
+                var user = await _getUserById.Execute(id);
+
+                if (user == null)
+                {
+                    _logger.LogWarning("User not found. ID: {UserId}", id);
+                    return NotFound($"User with ID {id} was not found.");
+                }
+
+                return Ok(user.ToDto(_mapper));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving user with ID: {UserId}", id);
+                return StatusCode(500, "An internal server error ocurred.");
+            }
         }
 
         [HttpGet]

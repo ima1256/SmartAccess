@@ -6,11 +6,13 @@ namespace SmartAccess.Application.DTOs
     {
 
         public string Id { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Username is required")]
+        [Required]
         public string Username { get; set; } = string.Empty;
-        [Required(ErrorMessage = "RFIDCard is required")]
+        [Required]
         public string RFIDCard { get; set; } = string.Empty;
         public bool IsActive { get; set; } = false;
+
+
 
     }
 }

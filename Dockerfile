@@ -1,32 +1,26 @@
-# Etapa 1: build
+# Etapa 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+WORKDIR /app
 
-# Copiar archivos de solución y proyectos
+# Copiar archivos de proyecto
 COPY *.sln ./
-COPY SmartAccess.API/*.csproj ./SmartAccess.API/
-COPY SmartAccess.Application/*.csproj ./SmartAccess.Application/
-COPY SmartAccess.Domain/*.csproj ./SmartAccess.Domain/
-COPY SmartAccess.Infrastructure/*.csproj ./SmartAccess.Infrastructure/
-COPY SmartAccess.Shared/*.csproj ./SmartAccess.Shared/
+COPY SmartAccess.API/*.csproj SmartAccess.API/
+COPY SmartAccess.Application/*.csproj SmartAccess.Application/
+COPY SmartAccess.Domain/*.csproj SmartAccess.Domain/
+COPY SmartAccess.Infrastructure/*.csproj SmartAccess.Infrastructure/
+COPY SmartAccess.Shared/*.csproj SmartAccess.Shared/
+COPY SmartAccess.Tests/*.csproj SmartAccess.Tests/
 
 # Restaurar dependencias
 RUN dotnet restore
 
-# Copiar el resto del código
+# Copiar todo y compilar
 COPY . .
+WORKDIR /app/SmartAccess.API
+RUN dotnet publish -c Release -o /out
 
-# Publicar la app
-WORKDIR /src/SmartAccess.API
-RUN dotnet publish -c Release -o /app/publish
-
-# Etapa 2: runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+# Etapa 2: Imagen final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /app/publish .
-
-# Exponer el puerto de la API
-EXPOSE 80
-
-# Comando de inicio
+COPY --from=build /out .
 ENTRYPOINT ["dotnet", "SmartAccess.API.dll"]

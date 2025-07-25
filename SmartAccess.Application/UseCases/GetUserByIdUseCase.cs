@@ -12,7 +12,7 @@ namespace SmartAccess.Application.UseCases
         public GetUserByIdUseCase(IUserRepository repo) => _repo = repo;
 
         public async Task<User?> Execute(Guid id) => await _repo.GetByIdAsync(id);
-    }
 
+    }
 
 }

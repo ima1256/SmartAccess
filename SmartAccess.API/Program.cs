@@ -7,6 +7,7 @@ using SmartAccess.Infrastructure.Repositories;
 using FluentValidation;
 using SmartAccess.API.Validators;
 using SmartAccess.Application.DTOs;
+using SmartAccess.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,4 +36,10 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+
+app.Urls.Clear();
+app.Urls.Add("http://0.0.0.0:8080");
+
+builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
+
 app.Run();
