@@ -8,6 +8,7 @@ using FluentValidation;
 using SmartAccess.API.Validators;
 using SmartAccess.Application.DTOs;
 using SmartAccess.Application.Mapping;
+using SmartAccess.API.Middlewere;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,9 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
+
+// app.UseMiddleware<ExceptionHandlingMiddlewere>();
+
 app.MapControllers();
 
 app.Urls.Clear();

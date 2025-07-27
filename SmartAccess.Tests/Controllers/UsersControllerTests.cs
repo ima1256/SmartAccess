@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SmartAccess.Application.Mapping;
 using AutoMapper;
+using SmartAccess.Tests.Helpers;
+using SmartAccess.Application.UseCases;
 
 public class UsersControllerTests
 {
@@ -46,6 +48,7 @@ public class UsersControllerTests
             _getAllUsers.Object
         );
     }
+
 
     #region Register
 
@@ -176,6 +179,166 @@ public class UsersControllerTests
 
         _getUserById.Verify(s => s.Execute(userId), Times.Once);
 
+    }
+
+    [Fact]
+    public async Task Get_MapsUserToUserDto_ReturnsExpectedDto()
+    {
+        var userId = Guid.NewGuid();
+        var user = new User
+        {
+            Id = userId,
+            Username = "imanol",
+            RFIDCard = "RFID999",
+            IsActive = true,
+            Role = "Admin"
+        };
+
+        var expectedDto = new UserDto
+        {
+            Id = userId.ToString(),
+            Username = "imanol",
+            RFIDCard = "RFID999",
+            IsActive = true
+        };
+
+        _getUserById.Setup(s => s.Execute(userId)).ReturnsAsync(user);
+
+        var result = await _controller.Get(userId);
+
+        result.Should().BeOfType<OkObjectResult>();
+        var ok = result as OkObjectResult;
+        ok!.Value.Should().BeEquivalentTo(expectedDto, options => options.ExcludingMissingMembers());
+
+        _getUserById.Verify(s => s.Execute(userId), Times.Once);
+
+    }
+
+    #endregion
+
+    #region GetAll
+
+    [Fact]
+    public async Task GetAll_NoUsers_ReturnEmptyList()
+    {
+        _getAllUsers.Setup(s => s.Execute()).ReturnsAsync(Enumerable.Empty<User>());
+
+        var result = await _controller.GetAll();
+
+        result.Should().BeOfType<OkObjectResult>();
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var users = Assert.IsAssignableFrom<IEnumerable<UserDto>>(okResult.Value);
+        users.Should().BeEmpty();
+        _logger.VerifyLog(LogLevel.Information, "No users found");
+
+    }
+
+    [Fact]
+    public async Task GetAll_UsersExist_ReturnsList()
+    {
+        var users = new List<User> {
+                new () { Id = Guid.NewGuid(), Username = "User1", RFIDCard = "RFID1", IsActive = true },
+                new () { Id = Guid.NewGuid(), Username = "User2", RFIDCard = "RFID2", IsActive = false },
+            };
+
+        _getAllUsers.Setup(s => s.Execute()).ReturnsAsync(users);
+
+        var result = await _controller.GetAll();
+
+        result.Should().BeOfType<OkObjectResult>();
+
+        var okResult = Assert.IsType<OkObjectResult>(result);
+
+        var userDtos = Assert.IsAssignableFrom<IEnumerable<UserDto>>(okResult.Value);
+        userDtos.Should().BeEquivalentTo(users.Select(u => u.ToDto(_mapper)));
+    }
+
+    [Fact]
+    public async Task GetAll_ThrowsException_Returns500()
+    {
+        _getAllUsers.Setup(u => u.Execute()).ThrowsAsync(new Exception("Server error"));
+
+        var result = await _controller.GetAll();
+
+        var r = result.Should().BeOfType<ObjectResult>().Which.StatusCode.Should().Be(500);
+
+        _logger.VerifyLog(LogLevel.Error, "error occurred");
+
+    }
+
+    #endregion
+
+    #region UpdateUser
+
+    [Fact]
+    public async Task UpdateUser_InvalidInput_ReturnsBadRequest()
+    {
+        var userId = Guid.NewGuid();
+
+        UserDto? userDto = null;
+
+        var result = await _controller.UpdateUser(userId, userDto);
+
+        result.Should().BeOfType<BadRequestObjectResult>().Which.Value.Should().Be("User data must be provided.");
+
+
+    }
+
+    [Fact]
+    public async Task UpdateUser_UserNotFound_ReturnsNotFound()
+    {
+        var userId = Guid.NewGuid();
+        var dto = new UserDto { Id = userId.ToString(), Username = "test", RFIDCard = "RFID123", IsActive = true };
+        _updateUser.Setup(s => s.Execute(userId, dto)).ReturnsAsync(new UpdateUserResponse { Result = UpdateUserResult.NotFound, UpdatedUser = null });
+
+        var result = await _controller.UpdateUser(userId, dto);
+
+        result.Should().BeOfType<NotFoundObjectResult>().Which.Value.Should().Be($"User with ID {userId} not found.");
+
+    }
+
+    [Fact]
+    public async Task UpdateUser_Success_ReturnsOkWithUpdatedUser()
+    {
+        var userId = Guid.NewGuid();
+        var dto = new UserDto { Id = userId.ToString(), Username = "test", RFIDCard = "RFID123", IsActive = true };
+        _updateUser.Setup(s => s.Execute(userId, dto)).ReturnsAsync(new UpdateUserResponse
+        {
+            Result = UpdateUserResult.Success,
+            UpdatedUser = dto
+        });
+
+        var result = await _controller.UpdateUser(userId, dto);
+
+        var okResult = result.Should().BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo(dto);
+
+    }
+
+    [Fact]
+    public async Task UpdateUser_UnexpectedResult_ReturnsInternalServerError()
+    {
+        var userId = Guid.NewGuid();
+        var dto = new UserDto { Id = userId.ToString(), Username = "test", RFIDCard = "RFID123", IsActive = true };
+        _updateUser.Setup(s => s.Execute(userId, dto)).ReturnsAsync(new UpdateUserResponse
+        {
+            Result = (UpdateUserResult)999,
+            UpdatedUser = null
+        });
+        var result = await _controller.UpdateUser(userId, dto);
+        var objectResult = result.Should().BeOfType<ObjectResult>().Which;
+        objectResult.StatusCode.Should().Be(500);
+        objectResult.Value.Should().Be("Unexpected error.");
+    }
+
+    [Fact]
+    public async Task UpdateUser_ExceptionThrown_ReturnsInternalServerError()
+    {
+        var userId = Guid.NewGuid();
+        var dto = new UserDto { Id = userId.ToString(), Username = "test", RFIDCard = "RFID123", IsActive = true };
+        _updateUser.Setup(s => s.Execute(userId, dto)).ThrowsAsync(new Exception("An internal server error occurred."));
+        var result = await _controller.UpdateUser(userId, dto);
+        var objectResult = result.Should().BeOfType<ObjectResult>().Which.StatusCode.Should().Be(500);
+        _logger.VerifyLog(LogLevel.Error, $"An error occurred while updating user with ID: {userId}.");
     }
 
     #endregion

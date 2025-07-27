@@ -25,7 +25,7 @@ namespace SmartAccess.Infrastructure.Repositories
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<IEnumerable<User?>> GetUsers()
+        public async Task<IEnumerable<User>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }

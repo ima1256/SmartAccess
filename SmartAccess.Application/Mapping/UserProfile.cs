@@ -16,7 +16,8 @@ namespace SmartAccess.Application.Mapping
         {
             CreateMap<User, UserDto>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
             CreateMap<UserDto, User>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)))
+                .ForMember(dest => dest.Role, opt => opt.Ignore());
         }
     }
 }

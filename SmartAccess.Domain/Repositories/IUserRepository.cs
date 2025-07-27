@@ -8,7 +8,7 @@ namespace SmartAccess.Domain.Repositories
 
         Task AddAsync(User user);
 
-        Task<IEnumerable<User?>> GetUsers();
+        Task<IEnumerable<User>> GetUsers();
 
         Task UpdateAsync(User user);
 

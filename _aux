@@ -540,3 +540,269 @@ public class UsersControllerTests
 
 //     _getUserById.Verify(s => s.Execute(userId), Times.Once);
 // }
+
+
+// [Fact]
+// public async Task Get_MapsUserToUserDto_ReturnsExpectedDto()
+// {
+//     // Arrange
+//     var userId = Guid.NewGuid();
+//     var user = new User
+//     {
+//         Id = userId,
+//         Username = "imanol",
+//         RFIDCard = "RFID999",
+//         IsActive = true,
+//         Role = "Admin"
+//     };
+
+//     var expectedDto = new UserDto
+//     {
+//         Id = userId.ToString(),
+//         Username = "imanol",
+//         RFIDCard = "RFID999",
+//         IsActive = true
+//     };
+
+//     _getUserById.Setup(s => s.Execute(userId)).ReturnsAsync(user);
+
+//     // Act
+//     var result = await _controller.Get(userId);
+
+//     // Assert
+//     result.Should().BeOfType<OkObjectResult>();
+//     var ok = result as OkObjectResult;
+//     ok!.Value.Should().BeEquivalentTo(expectedDto, options => options.ExcludingMissingMembers());
+
+//     _getUserById.Verify(s => s.Execute(userId), Times.Once);
+// }
+
+
+// _logger.LogInformation("No users found in the system.");
+// return Ok(Enumerable.Empty<UserDto>());
+
+// [Fact]
+// public async Task GetAll_NoUsers_ReturnsEmptyList()
+// {
+//     // Arrange
+//     _getAllUsers.Setup(x => x.Execute()).ReturnsAsync(new List<User>());
+
+//     // Act
+//     var result = await _controller.GetAll();
+
+//     // Assert
+//     var okResult = Assert.IsType<OkObjectResult>(result);
+//     var users = Assert.IsAssignableFrom<IEnumerable<UserDto>>(okResult.Value);
+//     users.Should().BeEmpty();
+
+//     _logger.Verify(
+//         x => x.LogInformation(It.Is<string>(s => s.Contains("No users found"))),
+//         Times.Once);
+// }
+
+// [Fact]
+// public async Task GetAll_UsersExist_ReturnsList()
+// {
+//     // Arrange
+//     var users = new List<User> {
+//         new User { Id = Guid.NewGuid(), Username = "User1", RFIDCard = "RFID1", IsActive = true },
+//         new User { Id = Guid.NewGuid(), Username = "User2", RFIDCard = "RFID2", IsActive = false },
+//     };
+//     _getAllUsers.Setup(x => x.Execute()).ReturnsAsync(users);
+
+//     // Aquí puedes configurar el mapper si usas Moq, o un Mapper real
+
+//     // Act
+//     var result = await _controller.GetAll();
+
+//     // Assert
+//     var okResult = Assert.IsType<OkObjectResult>(result);
+//     var userDtos = Assert.IsAssignableFrom<IEnumerable<UserDto>>(okResult.Value);
+//     userDtos.Should().HaveCount(users.Count);
+//     userDtos.Select(dto => dto.Username).Should().Contain(new[] { "User1", "User2" });
+// }
+
+// [Fact]
+// public async Task GetAll_ExecuteThrows_Returns500()
+// {
+//     // Arrange
+//     _getAllUsers.Setup(x => x.Execute()).ThrowsAsync(new Exception("Fail"));
+
+//     // Act
+//     var result = await _controller.GetAll();
+
+//     // Assert
+//     var objectResult = Assert.IsType<ObjectResult>(result);
+//     Assert.Equal(500, objectResult.StatusCode);
+
+//     _logger.Verify(
+//         x => x.LogError(It.IsAny<Exception>(), It.Is<string>(s => s.Contains("error ocurred"))),
+//         Times.Once);
+// }
+
+
+// public async Task Register_ThrowsException_Returns500()
+// {
+//     var dto = new UserDto { Username = "ErrorUser", RFIDCard = "XXXXX", IsActive = false };
+//     _registerUser.Setup(u => u.Execute(dto)).ThrowsAsync(new Exception("Database error"));
+
+//     var result = await _controller.Register(dto);
+
+//     result.Should().BeOfType<ObjectResult>().Which.StatusCode.Should().Be(500);
+// }
+
+// public static void VerifyLog(this Mock<ILogger> logger, LogLevel level, string containsMessage)
+// {
+//     logger.Verify(
+//         x => x.Log(
+//             level,
+//             It.IsAny<EventId>(),
+//             It.Is<It.IsAnyType>((v, t) => v.ToString()!.Contains(containsMessage)),
+//             It.IsAny<Exception?>(),
+//             It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+//         Times.Once);
+// }
+
+// public UpdateUserResult Result { get; set; }
+// public UserDto? UpdatedUser { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// [Fact]
+// public async Task UpdateUser_InvalidInput_ReturnsBadRequest()
+// {
+//     var userId = Guid.NewGuid();
+//     UserDto nullDto = null;
+
+//     var result = await _controller.UpdateUser(userId, nullDto);
+
+//     result.Should().BeOfType<BadRequestObjectResult>()
+//         .Which.Value.Should().Be("Invalid input data.");
+// }
+
+// [Fact]
+// public async Task UpdateUser_UserNotFound_ReturnsNotFound()
+// {
+//     var userId = Guid.NewGuid();
+//     var dto = new UserDto { Id = userId.ToString(), Username = "test", RFIDCard = "RFID123", IsActive = true };
+
+//     _updateUser.Setup(u => u.Execute(userId, dto))
+//         .ReturnsAsync(new UpdateUserResultWrapper
+//         {
+//             Result = UpdateUserResult.NotFound,
+//             UpdatedUser = null
+//         });
+
+//     var result = await _controller.UpdateUser(userId, dto);
+
+//     result.Should().BeOfType<NotFoundObjectResult>()
+//         .Which.Value.Should().Be($"User with ID {userId} not found.");
+// }
+
+// [Fact]
+// public async Task UpdateUser_Success_ReturnsOkWithUpdatedUser()
+// {
+//     var userId = Guid.NewGuid();
+//     var dto = new UserDto { Id = userId.ToString(), Username = "updatedUser", RFIDCard = "RFID456", IsActive = true };
+//     var updatedUser = dto;
+
+//     _updateUser.Setup(u => u.Execute(userId, dto))
+//         .ReturnsAsync(new UpdateUserResultWrapper
+//         {
+//             Result = UpdateUserResult.Success,
+//             UpdatedUser = updatedUser
+//         });
+
+//     var result = await _controller.UpdateUser(userId, dto);
+
+//     var okResult = result.Should().BeOfType<OkObjectResult>().Which;
+//     okResult.Value.Should().BeEquivalentTo(updatedUser);
+// }
+
+// [Fact]
+// public async Task UpdateUser_UnexpectedResult_ReturnsInternalServerError()
+// {
+//     var userId = Guid.NewGuid();
+//     var dto = new UserDto { Id = userId.ToString(), Username = "test", RFIDCard = "RFID123", IsActive = true };
+
+//     _updateUser.Setup(u => u.Execute(userId, dto))
+//         .ReturnsAsync(new UpdateUserResultWrapper
+//         {
+//             Result = (UpdateUserResult)999,
+//             UpdatedUser = null
+//         });
+
+//     var result = await _controller.UpdateUser(userId, dto);
+
+//     var objectResult = result.Should().BeOfType<ObjectResult>().Which;
+//     objectResult.StatusCode.Should().Be(500);
+//     objectResult.Value.Should().Be("Unexpected error.");
+// }
+
+// [Fact]
+// public async Task UpdateUser_ExceptionThrown_ReturnsInternalServerError()
+// {
+//     var userId = Guid.NewGuid();
+//     var dto = new UserDto { Id = userId.ToString(), Username = "test", RFIDCard = "RFID123", IsActive = true };
+
+//     _updateUser.Setup(u => u.Execute(userId, dto)).ThrowsAsync(new Exception("Database error"));
+
+//     var result = await _controller.UpdateUser(userId, dto);
+
+//     var objectResult = result.Should().BeOfType<ObjectResult>().Which;
+//     objectResult.StatusCode.Should().Be(500);
+//     objectResult.Value.Should().Be("An internal server error ocurred");
+
+//     _logger.Verify(
+//         x => x.LogError(It.IsAny<Exception>(), It.Is<string>(msg => msg.Contains("An error ocurred while updating the user")), userId),
+//         Times.Once);
+// }
+
+
+
+
+
+public class ExceptionHandlingMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+
+    public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        try
+        {
+            await _next(context); // Ejecuta el siguiente middleware / controlador
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An unhandled exception occurred.");
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = "application/json";
+
+            var response = new { message = "An internal server error occurred." };
+            var json = System.Text.Json.JsonSerializer.Serialize(response);
+
+            await context.Response.WriteAsync(json);
+        }
+    }
+}

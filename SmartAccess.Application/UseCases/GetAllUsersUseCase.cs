@@ -14,7 +14,7 @@ namespace SmartAccess.Application.UseCases
 
         public GetAllUsersUseCase(IUserRepository repo) => _repo = repo;
 
-        public async Task<IEnumerable<User?>> Execute() => await _repo.GetUsers();
+        public async Task<IEnumerable<User>> Execute() => await _repo.GetUsers();
 
 
     }

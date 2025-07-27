@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SmartAccess.Application.DTOs;
+using SmartAccess.Application.UseCases;
 
 namespace SmartAccess.Application.Contracts
 {
     public interface IUpdateUserUseCase
     {
-        public Task<bool> Execute(Guid id, UserDto dto);
+        public Task<UpdateUserResponse> Execute(Guid id, UserDto dto);
     }
 }

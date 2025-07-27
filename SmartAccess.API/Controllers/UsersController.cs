@@ -5,6 +5,7 @@ using SmartAccess.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using SmartAccess.Application.Mapping;
+using SmartAccess.Application.UseCases;
 
 namespace SmartAccess.API.Controllers
 {
@@ -51,10 +52,8 @@ namespace SmartAccess.API.Controllers
         public async Task<IActionResult> Register([FromBody] UserDto? dto)
         {
 
-            if (dto == null)
-            {
+            if (dto is null)
                 return BadRequest("Request body is null.");
-            }
 
             if (dto == null || !ModelState.IsValid)
             {
@@ -105,22 +104,80 @@ namespace SmartAccess.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var users = await _getAllUsers.Execute();
-            return Ok(users);
+
+            try
+            {
+                var users = await _getAllUsers.Execute();
+
+                if (!users.Any())
+                {
+                    _logger.LogInformation("No users found in the system.");
+                    return Ok(Enumerable.Empty<UserDto>());
+                }
+
+                var userDtos = users
+                            .Select(u => u.ToDto(_mapper))
+                            .ToList();
+
+                return Ok(userDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while retrieving users.");
+                return StatusCode(500, "An internal server error ocurred.");
+            }
         }
 
+
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(Guid id, UserDto dto)
+        public async Task<IActionResult> UpdateUser(Guid id, UserDto? dto)
         {
-            var result = await _updateUser.Execute(id, dto);
-            return result ? Ok("User updated.") : NotFound();
+
+            if (dto is null)
+                return BadRequest("User data must be provided.");
+
+            try
+            {
+
+                var response = await _updateUser.Execute(id, dto);
+                return MapUpdateResultToHttpResponse(response, id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while updating user with ID: {UserId}.", id);
+                return StatusCode(500, "An internal server error ocurred.");
+            }
+
         }
+
+        private IActionResult MapUpdateResultToHttpResponse(UpdateUserResponse updateUserResponse, Guid id)
+        {
+            return updateUserResponse.Result switch
+            {
+                UpdateUserResult.InvalidInput => BadRequest("Invalid input data."),
+                UpdateUserResult.NotFound => NotFound($"User with ID {id} not found."),
+                UpdateUserResult.Success => Ok(updateUserResponse.UpdatedUser),
+                _ => StatusCode(500, "Unexpected error."),
+            };
+        }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var result = await _deleteUser.Execute(id);
-            return result ? Ok("User deleted.") : NotFound();
+
+            try
+            {
+                var result = await _deleteUser.Execute(id);
+                return result ? Ok("User deleted.") : NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while deleting user with ID: {UserId}.", id);
+                return StatusCode(500, "An internal server error ocurred.");
+            }
+
         }
 
         [HttpGet("search")]

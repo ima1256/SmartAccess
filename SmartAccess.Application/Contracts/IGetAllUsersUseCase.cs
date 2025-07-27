@@ -8,6 +8,6 @@ namespace SmartAccess.Application.Contracts
 {
     public interface IGetAllUsersUseCase
     {
-        public Task<IEnumerable<User?>> Execute();
+        public Task<IEnumerable<User>> Execute();
     }
 }

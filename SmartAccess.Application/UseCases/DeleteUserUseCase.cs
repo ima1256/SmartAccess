@@ -14,14 +14,14 @@ namespace SmartAccess.Application.UseCases
 
         public DeleteUserUseCase(IUserRepository repo) => _repo = repo;
 
-        public async Task<bool> Execute(Guid id)
+        public async Task<DeleteUserResult> Execute(Guid id)
         {
             var user = await _repo.GetByIdAsync(id);
 
-            if (user is null) return false;
+            if (user is null) return DeleteUserResult.NotFound;
 
             await _repo.DeleteAsync(user);
-            return true;
+            return DeleteUserResult.Success;
         }
     }
 }
